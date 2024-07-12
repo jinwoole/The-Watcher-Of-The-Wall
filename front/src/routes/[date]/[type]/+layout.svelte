@@ -6,7 +6,7 @@
     onMount(() => {
       const { date, type } = $page.params;
   
-      // 누가 분명 개떡같은걸 넣겠지
+      // 제발 이상한걸 입력하지 말아주세요
       const dateRegex = /^\d{8}$/;
       const isValidDate = dateRegex.test(date);
   
@@ -40,12 +40,7 @@
       }
     });
   
-    let feedback = '';
-  
-    const submitFeedback = () => {
-      console.log('피드백 제출됨: ', feedback);
-      // 여기에 피드백 처리 로직 나중에
-    };
+
   </script>
   
 <slot />
