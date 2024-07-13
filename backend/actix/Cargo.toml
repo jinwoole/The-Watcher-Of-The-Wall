@@ -1,0 +1,19 @@
+[package]
+name = "auth-only"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+
+# DB Control, Development Purpose Only, Use AWS for Production Of Course
+# https://crates.io/crates/tokio-postgres
+tokio-postgres = "0.7.10"
+tokio = { version = "1", features = ["full"] }
+
+[dev-dependencies]
+# https://crates.io/crates/actix-rt
+actix-rt = "2"
+awc = "3.5.0"
+
+
