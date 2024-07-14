@@ -5,7 +5,7 @@
 <div class="card w-96 bg-base-100 shadow-xl">
     <div class="card-body">
     <h2 class="card-title text-center">Daily News 피드백 시스템</h2>
-    <p>잠깐, 이 페이지는 왜 들어오신거죠?</p>
+    <p>잠깐, 무슨 일이 일어난거죠?</p>
     </div>
 </div>
 </div>

@@ -1,5 +1,8 @@
 <script>
     import "tailwindcss/tailwind.css";
 </script>
-  
-<slot />
+
+<!-- 배경색 -->
+<div class="min-h-screen bg-sky-100">
+    <slot />
+</div>
