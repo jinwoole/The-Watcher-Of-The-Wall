@@ -3,7 +3,7 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { token } from '../../../utils/store.js';
-    import { validateToken } from '../../../utils/utils.js';
+    import { requestToken } from '../../../utils/utils.js';
 
     onMount(() => {
       const { date, type } = $page.params;
@@ -56,16 +56,23 @@
           else if (rsp === false) {
             //유효기간 경과 : 발급
             // 여기부터 작업해야함, 그런데 하려면 백엔드를 만들어야 함
-
+            res = requestToken(date, type);
+            console.log(res);
           } 
           else {
             goto('/error');
           }
         } 
         else {
-          //토큰 없는 경우: 발급
-          console.log('Token does not exist');
-        }
+            //토큰 없는 경우: 발급
+            requestToken(date, type)
+            .then(res => {
+              console.log(res.token);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
 
       } else {
         goto('/error');

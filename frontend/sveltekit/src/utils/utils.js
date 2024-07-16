@@ -1,56 +1,36 @@
 import { goto } from '$app/navigation';
 
-const BASE_URL = 'https://your-api-base-url.com'; // 여기에 실제 API 기본 URL을 입력하세요
+const BASE_URL = 'http://100.91.198.6:5095'; // 여기에 실제 API 기본 URL을 입력하세요
 
-export async function apiRequest(endpoint, method = 'GET', data = null, token = null) {
-    const url = `${BASE_URL}${endpoint}`;
-    const headers = {
-        'Content-Type': 'application/json',
-    };
-
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    const options = {
-        method,
-        headers,
-    };
-
-    if (data) {
-        options.body = JSON.stringify(data);
-    }
-
+export async function requestToken(date, type) {
     try {
-        const response = await fetch(url, options);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        return await response.json();
+        const endpoint = `/api/check/${date}/${type}`;
+        const response = await apiRequest(endpoint, 'GET');
+        return response;
     } catch (error) {
-        console.error("API request failed:", error);
+        console.error("Failed to request token:", error);
         throw error;
     }
 }
 
-export async function validateToken(token) {
-    if (!token) {
-        throw new Error('Token is required');
-    }
-
+export async function apiRequest(endpoint, method, body) {
     try {
-        const response = await apiRequest('/validate-token', 'POST', { token });
-        
-        if (response === 'ok') {
-            return true;
-        } else if (response === 'no') {
-            return false;
-        } else {
-            goto('/error');
+        const url = `${BASE_URL}${endpoint}`;
+        const options = {
+            method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        };
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('API request failed');
         }
+        const data = await response.json();
+        return data;
     } catch (error) {
-        goto('/error');
+        console.error("API request failed:", error);
+        throw error;
     }
 }

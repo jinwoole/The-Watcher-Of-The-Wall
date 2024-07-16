@@ -1,5 +1,4 @@
 use tokio_postgres::{Client, NoTls};
-use std::fs;
 use std::env;
 use std::sync::Arc;
 use tokio::sync::Mutex;

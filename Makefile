@@ -1,7 +1,7 @@
 .PHONY: all re build down debug
 
 all:
-	docker-compose up -d
+	sudo docker-compose up -d
 
 re:
 	sudo docker-compose down

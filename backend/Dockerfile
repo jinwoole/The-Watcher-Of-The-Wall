@@ -1,5 +1,5 @@
 # 빌드 스테이지
-FROM rust:1.73-buster as builder
+FROM rust:1.75-buster as builder
 
 WORKDIR /usr/src/app
 
