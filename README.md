@@ -1,18 +1,32 @@
-# Feedback system frontend
+# Feedback system
 
-## 목적
-1. Daily News 피드백 받기
-2. Actix Web 학습
-3. 러스트 써보기
+## What is needed
+Docker, Docker Compose, Make
 
-## 사용법
-1. .env.example를 .env로 바꿔서 적절히 채워넣기
-2. docker-compose.yml 참고
-3. 도커 설치 및 계정 권한 등등 여부 확인 후 make (Makefile 참조)
-4. 아 맞다, 프론트 src/utils/utils.js도 수정해야
+## How to use
+### 1. Copy .env.example -> .env
+and fill it
 
-## 코드 리딩 순서
-1. main.rs
+### 2. Go to frontend/sveltekit/srcs/utils/utils.js
+modify BASE_URL(server url/address)
+
+### 3. make
+```
+make
+# start == docker compose up
+
+make build
+# -- build
+
+make re
+```
+### 4. Example
+아직 안만듦
+
+## What is included?
+Sveltekit with just node server  
+Actix web backend  
+PostgreSQL Container
 
 
 
