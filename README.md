@@ -28,5 +28,3 @@ Sveltekit with just node server
 Actix web backend  
 PostgreSQL Container
 
-
-
