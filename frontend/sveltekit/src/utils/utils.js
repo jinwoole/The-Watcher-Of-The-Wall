@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation';
 
-const BASE_URL = 'http://100.91.198.6:5095'; // 여기에 실제 API 기본 URL을 입력하세요
+const BASE_URL = 'https://backendfeedback.jinwoolee.info';
 
 export async function requestToken(date, type) {
     try {

@@ -8,6 +8,8 @@ use db_control::{Database, AppState, load_connection_string};
 mod generate_token;
 use generate_token::generate_token;
 
+//로깅
+
 #[actix_web::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let connection_string = load_connection_string();
@@ -17,10 +19,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
 
     HttpServer::new(move || {
-        let cors = Cors::default() // 배포하면 다 막기 사실 지금도 배포야 할 수 있지만
-            .allow_any_origin() // 모든 출처 허용
-            .allow_any_method() // 모든 HTTP 메서드 허용
-            .allow_any_header() // 모든 헤더 허용
+        let cors = Cors::default()
+            .allowed_origin("https://feedback.jinwoolee.info")
+            .allowed_methods(vec!["GET", "POST", "PUT", "DELETE"])
+            .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+            .allowed_header(http::header::CONTENT_TYPE)
             .max_age(3600);
 
         App::new()
