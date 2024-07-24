@@ -1,9 +1,7 @@
 <script>
-
+import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import { onMount } from 'svelte';
-import { token } from '../../../utils/store.js';
-
 
 onMount(() => {
       const { date } = $page.params;
@@ -46,23 +44,11 @@ onMount(() => {
           return;
         } 
       }
+      let currentToken = localStorage.getItem('token');
+      console.log("currentToken: ", currentToken);
 
-        // 토큰 유무 검증
-        if ($token) {
-            rsp = validateToken($token);
-            if (rsp === true) {
-                return;
-            } 
-            else if (rsp === false) {
-                goto('/error');
-            } 
-            else {
-                goto('/error');
-            }
-        } 
-        else {
-            goto('/error');
-        }
+
+
     }
 );
 

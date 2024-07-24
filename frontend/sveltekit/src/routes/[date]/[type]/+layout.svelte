@@ -2,8 +2,39 @@
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-    import { token } from '../../../utils/store.js';
-    import { requestToken } from '../../../utils/utils.js';
+    import { requestToken, validateToken } from '../../../utils/utils.js';
+
+
+        // 토큰 검증 및 관리 함수
+    export async function manageToken(date, type) {
+      let currentToken = localStorage.getItem('token') || '';
+      console.log(currentToken)
+      
+      if (!currentToken) {
+        try {
+          const newToken = await requestToken(date, type);
+          localStorage.setItem('token', newToken);
+          console.log("set new token");
+          goto("/comment/" + date)
+        } catch (error) {
+          goto("/error")
+        }
+      } else {
+        try {
+          console.log("there is a token");
+          const isValid = await validateToken(currentToken);
+          if (!isValid) {
+            // 토큰이 유효하지 않으면 새 토큰 요청
+            const newToken = await requestToken();
+            token.set(newToken);
+          }
+        } catch (error) {
+          goto("/comment/" + date)
+          // 에러 처리 로직
+        }
+      }
+    }
+
 
     onMount(() => {
       const { date, type } = $page.params;
@@ -47,38 +78,10 @@
           goto('/error/too_late');
           return;
         }
-        // 토큰 유무 검증
-        if ($token) {
-          rsp = validateToken($token);
-          if (rsp === true) {
-            goto("/comment/" + date);
-          } 
-          else if (rsp === false) {
-            //유효기간 경과 : 발급
-            // 여기부터 작업해야함, 그런데 하려면 백엔드를 만들어야 함
-            res = requestToken(date, type);
-            console.log(res);
-          } 
-          else {
-            goto('/error');
-          }
-        } 
-        else {
-            //토큰 없는 경우: 발급
-            requestToken(date, type)
-            .then(res => {
-              console.log(res.token);
-            })
-            .catch(error => {
-              console.error(error);
-            });
-          }
-
       } else {
         goto('/error');
         return;
       }
-
       // 타입 검증
       const validTypes = ['good', 'soso', 'bad'];
       const isValidType = validTypes.includes(type);
@@ -87,16 +90,13 @@
         goto('/error');
         return;
       }
+
+      // 토큰 검증
+      manageToken(date, type);
+
+
+
     });
-
-    
-
-
-
-
-
 </script>
 
-
-<!-- svelte-ignore non-top-level-reactive-declaration -->
 <slot />

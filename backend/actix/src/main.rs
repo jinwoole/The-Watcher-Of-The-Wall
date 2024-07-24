@@ -7,6 +7,8 @@ use db_control::{Database, AppState, load_connection_string};
 
 mod generate_token;
 use generate_token::generate_token;
+mod validate_token;
+use validate_token::validate_token;
 
 //로깅
 
@@ -32,6 +34,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .service(
                 web::resource("/api/check/{date}/{type}")
                     .route(web::get().to(generate_token))
+            )
+            .service(
+                web::resource("/api/validate/{token}")
+                    .route(web::get().to(validate_token))
             )
             // 다른 API 라우트들...
     })

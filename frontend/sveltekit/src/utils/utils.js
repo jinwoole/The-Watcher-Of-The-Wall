@@ -1,5 +1,3 @@
-import { goto } from '$app/navigation';
-
 const BASE_URL = 'https://backendfeedback.jinwoolee.info';
 
 export async function requestToken(date, type) {
@@ -9,6 +7,17 @@ export async function requestToken(date, type) {
         return response;
     } catch (error) {
         console.error("Failed to request token:", error);
+        throw error;
+    }
+}
+
+export async function validateToken(token) {
+    try {
+        const endpoint = `/api/validate/${token}`;
+        const response = await apiRequest(endpoint, 'GET');
+        return response;
+    } catch (error) {
+        console.error("Failed to validate token:", error);
         throw error;
     }
 }
