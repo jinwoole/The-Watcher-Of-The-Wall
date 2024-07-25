@@ -13,8 +13,7 @@
       if (!currentToken) {
         try {
           const newToken = await requestToken(date, type);
-          localStorage.setItem('token', newToken);
-          console.log("set new token");
+          localStorage.setItem('token', newToken.token);
           goto("/comment/" + date)
         } catch (error) {
           goto("/error")

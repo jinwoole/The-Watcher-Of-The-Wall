@@ -2,6 +2,7 @@
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import { onMount } from 'svelte';
+import { validateToken } from '../../../utils/utils';
 
 onMount(() => {
       const { date } = $page.params;
@@ -45,8 +46,8 @@ onMount(() => {
         } 
       }
       let currentToken = localStorage.getItem('token');
-      console.log("currentToken: ", currentToken);
-
+      let res = validateToken(currentToken);
+      console.log("res: ", res);
 
 
     }
