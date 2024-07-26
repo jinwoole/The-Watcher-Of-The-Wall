@@ -4,7 +4,7 @@ import { page } from '$app/stores';
 import { onMount } from 'svelte';
 import { validateToken } from '../../../utils/utils';
 
-onMount(() => {
+onMount(async () => {
       const { date } = $page.params;
 
       const dateRegex = /^\d{8}$/;
@@ -46,8 +46,8 @@ onMount(() => {
         } 
       }
       let currentToken = localStorage.getItem('token');
-      let res = validateToken(currentToken);
-      console.log("res: ", res);
+      let res = await validateToken(currentToken);
+      console.log("res: ", res.rsp);
 
 
     }

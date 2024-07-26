@@ -3,6 +3,7 @@ use chrono::prelude::*;
 use rand::Rng;
 use sha2::{Sha256, Digest};
 use log::error;
+use serde_json::json;
 
 pub async fn generate_token(path: web::Path<(String, String)>) -> impl Responder {
     let (date, token_type) = path.into_inner();
@@ -41,7 +42,7 @@ fn is_valid_token_type(token_type: &str) -> bool {
 }
 
 
-fn create_token(date: &str, token_type: &str) -> Result<String, Box<dyn std::error::Error>> {
+pub fn create_token(date: &str, token_type: &str) -> Result<String, Box<dyn std::error::Error>> {
     let mut rng = rand::thread_rng();
     let random_part: u64 = rng.gen();
     
@@ -51,9 +52,11 @@ fn create_token(date: &str, token_type: &str) -> Result<String, Box<dyn std::err
     hasher.update(random_part.to_string());
     let result = hasher.finalize();
 
-    let token = format!("{:x}", result)[..32].to_string();
+    let token = format!("{}{:x}", date, result)[..40].to_string();
 
-    let json_result = format!("{{\"token\": \"{}\"}}", token);
+    let json_result = json!({
+        "token": token
+    }).to_string();
 
     Ok(json_result)
 }

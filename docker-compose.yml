@@ -19,6 +19,7 @@ services:
       - DB_USER=${DB_USER:-user}
       - DB_PASSWORD=${DB_PASSWORD:-password}
       - DB_NAME=${DB_NAME:-feedback}
+      - RUST_LOG=debug
     ports:
       - "5095:5095"
     depends_on:

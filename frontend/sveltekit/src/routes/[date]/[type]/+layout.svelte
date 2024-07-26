@@ -10,6 +10,7 @@
       let currentToken = localStorage.getItem('token') || '';
       console.log(currentToken)
       
+      //토큰 없으면 발급
       if (!currentToken) {
         try {
           const newToken = await requestToken(date, type);
@@ -18,15 +19,20 @@
         } catch (error) {
           goto("/error")
         }
-      } else {
+      } else { //토큰 있으면 검증
         try {
           console.log("there is a token");
           const isValid = await validateToken(currentToken);
           if (!isValid) {
             // 토큰이 유효하지 않으면 새 토큰 요청
-            const newToken = await requestToken();
+            const newToken = await requestToken(date, type);
             token.set(newToken);
+            goto("/comment/" + date)
+          } else {
+            // 토큰이 유효하면 코멘트 페이지로 이동
+            goto("/comment/" + date)
           }
+          
         } catch (error) {
           goto("/comment/" + date)
           // 에러 처리 로직

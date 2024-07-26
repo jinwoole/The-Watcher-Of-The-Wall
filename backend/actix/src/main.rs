@@ -2,6 +2,9 @@ use actix_web::{web, App, HttpServer, http};
 use actix_cors::Cors;
 use std::sync::Arc;
 use tokio::sync::Mutex;
+use log::info;
+use env_logger::Env;
+
 mod db_control;
 use db_control::{Database, AppState, load_connection_string};
 
@@ -14,6 +17,8 @@ use validate_token::validate_token;
 
 #[actix_web::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    env_logger::init_from_env(Env::default().default_filter_or("info"));
+    info!("Starting server...");
     let connection_string = load_connection_string();
     let db = Database::new(&connection_string).await?;
     let app_data = web::Data::new(AppState {
