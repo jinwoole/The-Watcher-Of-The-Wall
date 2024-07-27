@@ -15,15 +15,22 @@ use validate_token::validate_token;
 
 //로깅
 
+pub mod redis_control;
+
+
+
 #[actix_web::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     env_logger::init_from_env(Env::default().default_filter_or("info"));
     info!("Starting server...");
+
+    // PostgreSQL
     let connection_string = load_connection_string();
     let db = Database::new(&connection_string).await?;
     let app_data = web::Data::new(AppState {
         db: Arc::new(Mutex::new(db)),
     });
+
 
     HttpServer::new(move || {
         let cors = Cors::default()
