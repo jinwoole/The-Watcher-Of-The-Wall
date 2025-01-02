@@ -10,7 +10,7 @@
     // Fetch keywords from the backend API when the component mounts
     onMount(async () => {
         try {
-            const response = await fetch('http://localhost:8000/keywords');
+            const response = await fetch('https://backendfeedback.jinwoolee.info/keywords');
             const data = await response.json();
             keywords.set(data.keywords);
         } catch (error) {
@@ -21,7 +21,7 @@
     // Handle keyword deletion
     async function handleDeleteClick(keyword: string) {
         try {
-            const response = await fetch(`http://localhost:8000/db/items/${encodeURIComponent(keyword)}`, {
+            const response = await fetch(`https://backendfeedback.jinwoolee.info/db/items/${encodeURIComponent(keyword)}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
@@ -38,7 +38,7 @@
     async function handleAddKeyword() {
         if ($newKeyword.trim()) {
             try {
-                const response = await fetch('http://localhost:8000/db/items', {
+                const response = await fetch('https://backendfeedback.jinwoolee.info/db/items', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

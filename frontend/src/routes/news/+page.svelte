@@ -47,7 +47,8 @@
     // Fetch keywords from the backend API when the component mounts
     onMount(async () => {
         try {
-            const response = await fetch('http://localhost:8000/keywords');
+            const response = await fetch('https://backendfeedback.jinwoolee.info/keywords');
+            console.log("대체 왜")
             const data = await response.json();
             keywords.set(data.keywords);
         } catch (error) {
@@ -140,7 +141,7 @@
 
     // Fetch news data from the backend API based on the selected keyword
     $: if ($selectedKeyword) {
-        fetch(`http://localhost:8000/news?keyword=${encodeURIComponent($selectedKeyword)}`)
+        fetch(`https://backendfeedback.jinwoolee.info/news?keyword=${encodeURIComponent($selectedKeyword)}`)
             .then(response => response.json())
             .then(data => {
                 // Parse publishedAt to Date objects and sanitize fields

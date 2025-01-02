@@ -15,7 +15,7 @@ class Item(BaseModel):
 db.create_table("CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT)")
 
 # CREATE
-@router.post("/items")
+@router.post("items")
 async def create_item(item: Item):
     try:
         # Check for duplicate value
@@ -36,7 +36,7 @@ async def create_item(item: Item):
         raise HTTPException(status_code=500, detail=str(e))
 
 # DELETE
-@router.delete("/items/{value}")
+@router.delete("items/{value}")
 async def delete_item(value: str):
     try:
         query = "DELETE FROM items WHERE value = ?"

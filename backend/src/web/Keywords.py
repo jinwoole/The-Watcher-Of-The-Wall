@@ -8,7 +8,7 @@ router = APIRouter(prefix="/keywords")
 db = Database(db_path="database.sqlite")
 db.connect()
 
-@router.get("/")
+@router.get("")
 def echo() -> KeywordsResponse:
     concatenated_string = db.fetch_all("SELECT * FROM items")
     print(concatenated_string)
