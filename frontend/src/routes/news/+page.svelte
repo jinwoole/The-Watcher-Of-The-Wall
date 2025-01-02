@@ -243,7 +243,7 @@
                                         {formatDate(news.publishedAt)}
                                     </td>
                                     <td 
-                                        class="px-4 py-2 w-32"
+                                        class="px-4 py-2 w-32 relative overflow-visible"
                                     >
                                         <button 
                                             class="keyword-button px-1 py-0.5 bg-green-500 text-white text-xs rounded hover:bg-green-600 transition duration-200"
@@ -252,7 +252,9 @@
                                             추가
                                         </button>
                                         {#if $openOptionsId === news.id}
-                                            <div class="option-card absolute mt-1 p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg flex justify-center space-x-2 w-36">
+                                            <div 
+                                                class="option-card absolute top-full left-0 p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg flex justify-center space-x-2 w-36 z-50 pointer-events-auto -mt-2"
+                                            >
                                                 <button 
                                                     class="keyword-button px-1 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition duration-200"
                                                     on:click={() => handleOptionClick(news, 'public')}
